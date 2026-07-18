@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+COMMIT_MSG_FILE="$1"
+
+MESSAGE="$(head -n 1 "${COMMIT_MSG_FILE}")"
+
+MIN_LENGTH=10
+
+if [[ "${#MESSAGE}" -lt "${MIN_LENGTH}" ]]; then
+    cat <<EOF
+
+⚠ Commit message is very short.
+
+Consider writing a more descriptive message:
+
+Good:
+  add remove fee validation
+
+Less useful:
+  fix
+  update
+  test
+
+This is only a suggestion.
+The commit will continue.
+
+EOF
+fi
+
+exit 0

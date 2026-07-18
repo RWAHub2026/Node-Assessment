@@ -1,0 +1,27 @@
+# Design Notes
+
+Rename this file to `DESIGN.md` before submitting. Keep it brief.
+
+---
+
+## Assumptions
+
+What did you assume when requirements were unclear?
+
+---
+
+## Implementation
+
+How did you handle fees, idempotency, and balance updates?
+
+---
+
+## Concurrency
+
+How did you prevent overdraw under parallel requests?
+
+---
+
+## Trade-offs
+
+What would you do differently with more time?

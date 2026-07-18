@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+HUSKY_DIR="$(cd -- "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(cd -- "${HUSKY_DIR}/.." && pwd)"
+
+MARKER_FILE="${ROOT_DIR}/.git/.balance-welcome-shown"
+
+if [[ -f "${MARKER_FILE}" ]]; then
+    exit 0
+fi
+
+cat <<EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Welcome to Balance
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Useful commands:
+
+  make check      Run all quality checks
+  npm test        Run tests
+
+Exercise instructions:
+
+  See ISSUE.md
+
+Husky hooks are pre-configured.
+You do not need to modify them.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
+
+touch "${MARKER_FILE}"
+
+exit 0

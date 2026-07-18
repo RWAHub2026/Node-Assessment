@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+echo "Running pre-commit checks..."
+
+SCRIPT_DIR="$(cd -- "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+bash "${SCRIPT_DIR}/scripts/check.sh"
+
+npm run format:check || exit 1
+npm run lint || exit 1
+npm run test || exit 1
+
+echo "✓ Pre-commit checks passed."
