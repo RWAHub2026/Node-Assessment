@@ -71,7 +71,9 @@ describe("transfer API", () => {
     const alice = await fetch(`${baseUrl}/accounts/alice`).then((res) =>
       res.json(),
     );
-    const bob = await fetch(`${baseUrl}/accounts/bob`).then((res) => res.json());
+    const bob = await fetch(`${baseUrl}/accounts/bob`).then((res) =>
+      res.json(),
+    );
 
     expect(alice.balanceCents).toBe(90_000);
     expect(bob.balanceCents).toBe(10_000);
@@ -102,7 +104,9 @@ describe("transfer API", () => {
     expect(transfer.feeCents).toBe(100);
     expect(transfer.netCents).toBe(9_900);
 
-    const bob = await fetch(`${baseUrl}/accounts/bob`).then((res) => res.json());
+    const bob = await fetch(`${baseUrl}/accounts/bob`).then((res) =>
+      res.json(),
+    );
 
     expect(bob.balanceCents).toBe(9_900);
   });
@@ -209,7 +213,9 @@ describe("transfer API", () => {
     const alice = await fetch(`${baseUrl}/accounts/alice`).then((res) =>
       res.json(),
     );
-    const bob = await fetch(`${baseUrl}/accounts/bob`).then((res) => res.json());
+    const bob = await fetch(`${baseUrl}/accounts/bob`).then((res) =>
+      res.json(),
+    );
 
     expect(alice.balanceCents).toBe(40_000);
     expect(bob.balanceCents).toBe(60_000);

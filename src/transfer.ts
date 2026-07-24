@@ -41,11 +41,13 @@ export function calculateTransferBreakdown(
   amountCents: number,
   feePercent: number,
 ): TransferBreakdown {
-  // TODO: apply the configured fee percentage.
+  const feeCents = Math.floor((amountCents * feePercent) / 100);
+  const netCents = amountCents - feeCents;
+
   return {
     amountCents,
-    feeCents: 0,
-    netCents: amountCents,
+    feeCents,
+    netCents,
   };
 }
 
