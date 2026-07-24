@@ -16,6 +16,8 @@
 ```
 
 - why is this needed? and it is causing the script to exit with an error.
+- Line in README.md saying preserve git history if possible but thats not possible in the codebase they designed because phase wise implementation commit was failing due to husky test hook.
+- common.sh had exit 1 which makes no sense as it was killing husky hook prematurely.
 
 ## Implementation
 
