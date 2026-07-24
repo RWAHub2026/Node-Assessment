@@ -1,0 +1,28 @@
+# Design Notes
+
+## Assumptions
+
+- Fees are rounded down with `Math.floor` when converting a percentage to cents.
+- Idempotency compares only `fromAccountId`, `toAccountId`, and `amountCents` via `stableTransferPayload()`. The key itself is not part of the payload hash.
+- Idempotency records live in memory for the process lifetime. They are not persisted or expired.
+- Transfers are serialized per sender account, not globally.
+
+## Implementation
+
+**Fees:** `calculateTransferBreakdown()` computes `feeCents` from the configured `transferFeePercent`. The sender is debited the full `amountCents`; the recipient is credited `netCents` (`amountCents - feeCents`).
+
+**Idempotency:** Before mutating balances, the store looks up the `idempotencyKey`. A matching payload returns the original transfer as a replay (HTTP 200). A mismatched payload raises `IdempotencyConflictError` (HTTP 409). New transfers store `{ payloadHash, transferId }` after a successful debit/credit.
+
+**Balance updates:** Both the idempotency check and balance mutation run inside `executeTransfer()`, which is called under the sender account lock.
+
+## Concurrency
+
+A per-account promise-chain lock serializes `createTransfer()` calls that share the same `fromAccountId`. Each request waits for the prior operation on that account to finish before checking balance and debiting. This prevents two concurrent transfers from both passing an insufficient-balance guard against a stale balance.
+
+Transfers between different sender accounts can still run in parallel.
+
+## Trade-offs
+
+- **Per-account vs global lock:** Per-account locking allows unrelated accounts to transfer concurrently. A global lock would be simpler but would serialize all transfers.
+- **In-memory idempotency:** Records are lost on restart and grow without bound. A production system would use a database with TTL and possibly a unique constraint on `idempotencyKey`.
+- **No lock on recipient:** Only the sender is locked. This is sufficient for overdraw prevention but would not guard against concurrent credits to the same account if that became a concern.

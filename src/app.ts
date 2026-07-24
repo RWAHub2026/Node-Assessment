@@ -1,6 +1,10 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 
-import { createDefaultStore, type TransferStore } from "./store.js";
+import {
+  createDefaultStore,
+  IdempotencyConflictError,
+  type TransferStore,
+} from "./store.js";
 import {
   validateFeePercent,
   validateTransferInput,
@@ -32,7 +36,9 @@ export function createApp(options: AppOptions = {}) {
       }
 
       if (method === "GET" && url.pathname.startsWith("/accounts/")) {
-        const accountId = decodeURIComponent(url.pathname.slice("/accounts/".length));
+        const accountId = decodeURIComponent(
+          url.pathname.slice("/accounts/".length),
+        );
         const account = store.getAccount(accountId);
 
         if (!account) {
@@ -78,9 +84,20 @@ export function createApp(options: AppOptions = {}) {
         }
 
         try {
-          const transfer = store.createTransfer(input);
-          sendJson(response, 201, transfer);
+          const result = await store.createTransfer(input);
+
+          if (result.status === "replay") {
+            sendJson(response, 200, result.transfer);
+            return;
+          }
+
+          sendJson(response, 201, result.transfer);
         } catch (error) {
+          if (error instanceof IdempotencyConflictError) {
+            sendJson(response, 409, { error: error.message });
+            return;
+          }
+
           const message =
             error instanceof Error ? error.message : "Transfer failed.";
 

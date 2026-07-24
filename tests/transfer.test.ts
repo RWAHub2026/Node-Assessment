@@ -60,7 +60,10 @@ describe("transfer helpers", () => {
   });
 
   it("calculates transfer breakdown at the maximum fee", () => {
-    const breakdown = calculateTransferBreakdown(10_000, MAX_TRANSFER_FEE_PERCENT);
+    const breakdown = calculateTransferBreakdown(
+      10_000,
+      MAX_TRANSFER_FEE_PERCENT,
+    );
 
     expect(breakdown.feeCents).toBe(500);
     expect(breakdown.netCents).toBe(9_500);

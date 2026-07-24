@@ -32,10 +32,10 @@ The starter code is intentionally incomplete. Focus on HTTP semantics, domain lo
 
 Example — transfer **$100.00** with a **1%** fee:
 
-| | Amount |
-| --- | --- |
-| Recipient receives | $99.00 |
-| Fee | $1.00 |
+|                         | Amount  |
+| ----------------------- | ------- |
+| Recipient receives      | $99.00  |
+| Fee                     | $1.00   |
 | Sender balance decrease | $100.00 |
 
 ### Idempotency
@@ -54,13 +54,13 @@ Example — transfer **$100.00** with a **1%** fee:
 
 Implement or finish:
 
-| Method | Path | Purpose |
-| --- | --- | --- |
-| `GET` | `/health` | Health check |
-| `GET` | `/accounts/:id` | Account balance |
-| `PATCH` | `/settings` | Update `transferFeePercent` |
-| `POST` | `/transfers` | Create a transfer |
-| `GET` | `/transfers/:id` | Fetch a transfer by id |
+| Method  | Path             | Purpose                     |
+| ------- | ---------------- | --------------------------- |
+| `GET`   | `/health`        | Health check                |
+| `GET`   | `/accounts/:id`  | Account balance             |
+| `PATCH` | `/settings`      | Update `transferFeePercent` |
+| `POST`  | `/transfers`     | Create a transfer           |
+| `GET`   | `/transfers/:id` | Fetch a transfer by id      |
 
 Use clear HTTP status codes and JSON error bodies.
 

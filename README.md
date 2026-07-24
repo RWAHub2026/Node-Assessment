@@ -46,12 +46,12 @@ tests/
 
 ## Commands
 
-| Command | Description |
-| --- | --- |
-| `npm run dev` | Start a local server on `127.0.0.1:3000` |
-| `npm test` | Run tests |
-| `npm run test:watch` | Watch mode |
-| `make check` | Format, lint, and test |
+| Command              | Description                              |
+| -------------------- | ---------------------------------------- |
+| `npm run dev`        | Start a local server on `127.0.0.1:3000` |
+| `npm test`           | Run tests                                |
+| `npm run test:watch` | Watch mode                               |
+| `make check`         | Format, lint, and test                   |
 
 ---
 
