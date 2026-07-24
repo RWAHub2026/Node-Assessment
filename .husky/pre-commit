@@ -4,7 +4,10 @@ echo "Running pre-commit checks..."
 
 SCRIPT_DIR="$(cd -- "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+echo "Loading check script..."
 bash "${SCRIPT_DIR}/scripts/check.sh"
+
+echo "Running format checks..."
 
 npm run format:check || exit 1
 npm run lint || exit 1

